@@ -1,18 +1,26 @@
 /**
  * Deposit and withdraw panel.
  *
- * TODO: wire useDeposit and useWithdraw once contract hooks are implemented.
- * TODO: show real share balance from useBalance.
+ * TODO:
+ * 1. Import `useWallet` from `../context/WalletContext`
+ * 2. Import `useBalance`, `useDeposit`, `useWithdraw` from `../hooks/useContracts`
+ * 3. If wallet is not connected, show a "Connect your wallet" message
+ * 4. Show the user's current share balance from `useBalance(publicKey)`
+ * 5. Render a tab switcher: "Deposit" | "Withdraw"
+ * 6. Deposit tab: number input (USDC amount) + submit button that calls
+ *    `deposit(BigInt(amount * 1_000_000))` (USDC has 7 decimal places on Stellar)
+ * 7. Withdraw tab: number input (shares to burn) + submit button that calls
+ *    `withdraw(BigInt(shares))`
+ * 8. Disable the submit button while `depositing` or `withdrawing` is true
  */
 export function DepositWithdraw() {
   return (
     <div className="card">
       <h2>Deposit / Withdraw</h2>
       <p className="muted">
-        Connect your wallet and implement the contract hooks to enable deposits
-        and withdrawals.
+        {/* TODO: replace with the full deposit/withdraw form — see above */}
+        Implement wallet connection and contract hooks to enable this panel.
       </p>
-      {/* TODO: render deposit/withdraw form once useDeposit/useWithdraw are implemented */}
     </div>
   );
 }

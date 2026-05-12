@@ -1,8 +1,8 @@
 /**
  * Wallet context — manages Freighter wallet connection state.
  *
- * TODO: implement connect() using @stellar/freighter-api isConnected + getPublicKey
- * TODO: implement signTx() using @stellar/freighter-api signTransaction
+ * Uses @stellar/freighter-api to connect to the Freighter browser extension.
+ * Reference: https://docs.freighter.app/docs/guide/usingFreighterWebApp
  */
 import { createContext, useContext, useState, type ReactNode } from "react";
 
@@ -19,20 +19,34 @@ export const WalletContext = createContext<WalletState | null>(null);
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [publicKey] = useState<string | null>(null);
 
-  // TODO: implement connect — call isConnected(), then getPublicKey()
+  /**
+   * TODO:
+   * 1. Import `isConnected` and `getPublicKey` from `@stellar/freighter-api`
+   * 2. Call `await isConnected()` — if false, alert the user to install Freighter
+   * 3. Call `await getPublicKey()` to retrieve the active account's public key
+   * 4. Set it with `_setPublicKey(key)` (rename to `setPublicKey` when implementing)
+   */
   async function connect(): Promise<void> {
-    todo("WalletProvider::connect");
+    throw new Error("WalletProvider::connect not implemented");
   }
 
-  // TODO: implement disconnect — clear publicKey state
+  /**
+   * TODO:
+   * 1. Call `setPublicKey(null)` to clear the connected account
+   */
   function disconnect(): void {
-    todo("WalletProvider::disconnect");
+    throw new Error("WalletProvider::disconnect not implemented");
   }
 
-  // TODO: implement signTx — call signTransaction(xdr, { network: "TESTNET" })
+  /**
+   * TODO:
+   * 1. Import `signTransaction` from `@stellar/freighter-api`
+   * 2. Call `await signTransaction(xdr, { network: "TESTNET" })`
+   * 3. Return the signed XDR string
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function signTx(_xdr: string): Promise<string> {
-    return todo("WalletProvider::signTx");
+    throw new Error("WalletProvider::signTx not implemented");
   }
 
   return (
@@ -48,8 +62,4 @@ export function useWallet() {
   const ctx = useContext(WalletContext);
   if (!ctx) throw new Error("useWallet must be used inside WalletProvider");
   return ctx;
-}
-
-function todo(msg: string): never {
-  throw new Error(`Not implemented: ${msg}`);
 }
