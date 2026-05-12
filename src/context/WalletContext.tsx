@@ -1,15 +1,10 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  type ReactNode,
-} from "react";
-import {
-  isConnected,
-  getPublicKey,
-  signTransaction,
-} from "@stellar/freighter-api";
+/**
+ * Wallet context — manages Freighter wallet connection state.
+ *
+ * TODO: implement connect() using @stellar/freighter-api isConnected + getPublicKey
+ * TODO: implement signTx() using @stellar/freighter-api signTransaction
+ */
+import { createContext, useContext, useState, type ReactNode } from "react";
 
 export interface WalletState {
   publicKey: string | null;
@@ -22,24 +17,23 @@ export interface WalletState {
 export const WalletContext = createContext<WalletState | null>(null);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const [publicKey, setPublicKey] = useState<string | null>(null);
+  const [publicKey] = useState<string | null>(null);
 
-  const connect = useCallback(async () => {
-    const connected = await isConnected();
-    if (!connected) {
-      alert("Freighter wallet not found. Install it from freighter.app");
-      return;
-    }
-    const key = await getPublicKey();
-    setPublicKey(key);
-  }, []);
+  // TODO: implement connect — call isConnected(), then getPublicKey()
+  async function connect(): Promise<void> {
+    todo("WalletProvider::connect");
+  }
 
-  const disconnect = useCallback(() => setPublicKey(null), []);
+  // TODO: implement disconnect — clear publicKey state
+  function disconnect(): void {
+    todo("WalletProvider::disconnect");
+  }
 
-  const signTx = useCallback(async (xdr: string) => {
-    const result = await signTransaction(xdr, { network: "TESTNET" });
-    return result;
-  }, []);
+  // TODO: implement signTx — call signTransaction(xdr, { network: "TESTNET" })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function signTx(_xdr: string): Promise<string> {
+    return todo("WalletProvider::signTx");
+  }
 
   return (
     <WalletContext.Provider
@@ -50,9 +44,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Keep a re-export here for convenience
 export function useWallet() {
   const ctx = useContext(WalletContext);
   if (!ctx) throw new Error("useWallet must be used inside WalletProvider");
   return ctx;
+}
+
+function todo(msg: string): never {
+  throw new Error(`Not implemented: ${msg}`);
 }

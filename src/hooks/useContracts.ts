@@ -1,71 +1,37 @@
 /**
- * Hooks for interacting with the Vault and Aggregator contracts.
+ * Contract interaction hooks.
  *
- * All contract calls go through the Soroban RPC endpoint configured in
- * VITE_SOROBAN_RPC_URL. Transactions are signed via Freighter.
+ * TODO (useBalance): call vault.balance(publicKey) via SorobanRpc.Server
+ * TODO (usePools): call aggregator.get_pools() via SorobanRpc.Server
+ * TODO (useDeposit): build, simulate, sign, and submit vault.deposit transaction
+ * TODO (useWithdraw): build, simulate, sign, and submit vault.withdraw transaction
  *
- * TODO: implement useDeposit, useWithdraw, useBalance, usePools
- * using @stellar/stellar-sdk SorobanRpc and Contract classes.
+ * Reference:
+ *   https://stellar.github.io/js-stellar-sdk/
+ *   Contract address env vars: VITE_VAULT_CONTRACT_ID, VITE_AGGREGATOR_CONTRACT_ID
  */
 
-import { useState } from "react";
+export const RPC_URL =
+  import.meta.env.VITE_SOROBAN_RPC_URL ?? "https://soroban-testnet.stellar.org";
+export const VAULT_ID = import.meta.env.VITE_VAULT_CONTRACT_ID ?? "";
+export const AGGREGATOR_ID = import.meta.env.VITE_AGGREGATOR_CONTRACT_ID ?? "";
 
-const RPC_URL =
-  import.meta.env.VITE_SOROBAN_RPC_URL ??
-  "https://soroban-testnet.stellar.org";
-const VAULT_ID = import.meta.env.VITE_VAULT_CONTRACT_ID ?? "";
-const AGGREGATOR_ID = import.meta.env.VITE_AGGREGATOR_CONTRACT_ID ?? "";
-
-export { RPC_URL, VAULT_ID, AGGREGATOR_ID };
-
-/** Returns the user's vault share balance. */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function useBalance(_publicKey: string | null) {
-  // TODO: call vault.balance(publicKey) via SorobanRpc
+export function useBalance(_publicKey: string | null) { // eslint-disable-line @typescript-eslint/no-unused-vars
+  // TODO: query vault contract for share balance
   return { balance: null as bigint | null, loading: false };
 }
 
-/** Returns all registered pools with their APYs. */
 export function usePools() {
-  // TODO: call aggregator.get_pools() via SorobanRpc
-  return {
-    pools: [] as Array<{ address: string; apy_bps: number }>,
-    loading: false,
-  };
+  // TODO: query aggregator contract for registered pools
+  return { pools: [] as Array<{ address: string; apy_bps: number }>, loading: false };
 }
 
-/** Submits a deposit transaction. */
 export function useDeposit() {
-  const [loading, setLoading] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function deposit(_amount: bigint) {
-    setLoading(true);
-    try {
-      // TODO: build and submit vault.deposit(publicKey, amount) transaction
-      throw new Error("deposit not yet implemented");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return { deposit, loading };
+  // TODO: build and submit vault.deposit transaction via Freighter
+  return { deposit: async (_amount: bigint) => { throw new Error("not implemented"); }, loading: false }; // eslint-disable-line @typescript-eslint/no-unused-vars
 }
 
-/** Submits a withdraw transaction. */
 export function useWithdraw() {
-  const [loading, setLoading] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function withdraw(_shares: bigint) {
-    setLoading(true);
-    try {
-      // TODO: build and submit vault.withdraw(publicKey, shares) transaction
-      throw new Error("withdraw not yet implemented");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return { withdraw, loading };
+  // TODO: build and submit vault.withdraw transaction via Freighter
+  return { withdraw: async (_shares: bigint) => { throw new Error("not implemented"); }, loading: false }; // eslint-disable-line @typescript-eslint/no-unused-vars
 }

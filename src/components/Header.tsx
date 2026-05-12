@@ -1,26 +1,17 @@
-import { useWallet } from "../context/WalletContext";
-
+/**
+ * App header with wallet connect button.
+ *
+ * TODO: wire useWallet() once WalletContext::connect is implemented.
+ */
 export function Header() {
-  const { publicKey, connected, connect, disconnect } = useWallet();
-
   return (
     <header className="header">
       <span className="header-title">Stellar Yield Aggregator</span>
       <div className="header-wallet">
-        {connected ? (
-          <>
-            <span className="wallet-address">
-              {publicKey!.slice(0, 6)}…{publicKey!.slice(-4)}
-            </span>
-            <button className="btn btn-outline" onClick={disconnect}>
-              Disconnect
-            </button>
-          </>
-        ) : (
-          <button className="btn btn-primary" onClick={connect}>
-            Connect Wallet
-          </button>
-        )}
+        {/* TODO: render connect/disconnect button using useWallet() */}
+        <button className="btn btn-primary" disabled>
+          Connect Wallet
+        </button>
       </div>
     </header>
   );
